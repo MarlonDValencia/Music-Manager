@@ -1,4 +1,4 @@
-package com.sofkau.gestionlibros.domain.generic;
+package com.sofka.musicmanager.domain.generic;
 
 import com.google.gson.Gson;
 

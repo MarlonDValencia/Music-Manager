@@ -1,4 +1,4 @@
-package com.sofkau.gestionlibros.domain.generic;
+package com.sofka.musicmanager.domain.generic;
 
 import java.util.HashSet;
 import java.util.LinkedList;
