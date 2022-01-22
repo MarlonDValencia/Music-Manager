@@ -14,7 +14,7 @@ public class CreatePlaylistUseCaseHandle extends UseCaseHandle{
     public CreatePlaylistUseCaseHandle(CreatePlaylistUseCase createPlaylistUseCase){
         this.createPlaylistUseCase = createPlaylistUseCase;
     }
-    @ConsumeEvent(value = "com.sofka.playlistcreated")
+    @ConsumeEvent(value = "com.sofka.createplaylist")
     void consumeBlocking(CreatePlaylistCommnad createPlaylistCommnad){
         var events = createPlaylistUseCase.apply(createPlaylistCommnad);
         savePlaylist(createPlaylistCommnad.getPlaylistId(), events);

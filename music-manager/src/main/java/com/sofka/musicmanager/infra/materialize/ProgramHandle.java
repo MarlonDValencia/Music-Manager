@@ -2,7 +2,7 @@ package com.sofka.musicmanager.infra.materialize;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.Filters;
-import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.client.MongoClient;
 import com.sofka.musicmanager.domain.playlist.events.PlaylistCreated;
 import com.sofka.musicmanager.domain.playlist.events.SongAdded;
 import io.quarkus.vertx.ConsumeEvent;
@@ -24,7 +24,7 @@ public class ProgramHandle {
         void consumePlaylistCreated(PlaylistCreated event){
         Map<String,  Object> document = new HashMap<>();
         document.put("_id", event.getAggregateId());
-        document.put("Name",event.getName());
+        document.put("playlistName",event.getName());
 
         mongoClient.getDatabase("queries")
                 .getCollection("playlist")
@@ -34,9 +34,9 @@ public class ProgramHandle {
     @ConsumeEvent(value = "com.sofka.songadded")
     void consumeSongAdded(SongAdded event){
         BasicDBObject document = new BasicDBObject();
+        document.put("song."+event.getTitle()+".id",event.getSongId());
         document.put("song."+event.getTitle()+".tittle",event.getTitle());
         document.put("song."+event.getTitle()+".link",event.getLink());
-        document.put("song."+event.getTitle()+".date",event.getDate());
         document.put("song."+event.getTitle()+".preview",event.getPreview());
 
         BasicDBObject updateObject = new BasicDBObject();

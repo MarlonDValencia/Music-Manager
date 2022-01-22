@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 @Dependent
 public class AddSongUseCase implements Function<AddSongCommand, List<DomainEvent>> {
     private final EventStoreRepository eventStoreRepository;
-    private String URL_BASE = "https://api.deezer.com/track/3135556";
+    private String URL_BASE = "https://api.deezer.com/search?q=eminem";
     private String response = "";
     Logger logger = Logger.getLogger("MyLog");
 
@@ -40,14 +40,18 @@ public class AddSongUseCase implements Function<AddSongCommand, List<DomainEvent
         try{
             response = request(URL_BASE);
             JsonObject cancion = new JsonParser().parse(response).getAsJsonObject();
+            JsonArray jsonCanciones = cancion.get("data").getAsJsonArray();
 
-            title = cancion.get("title").getAsString();
-            link = cancion.get("link").getAsString();
-            date = cancion.get("release_date").getAsString();
-            preview = cancion.get("preview").getAsString();
-            logger.info("Log to test");
-            var id = cancion.get("id").getAsString();
-            playlist.addSong(id,title,link,date,preview);
+            for (int i = 0; i < jsonCanciones.size(); i++){
+                JsonObject entry = jsonCanciones.get(i).getAsJsonObject();
+                title = entry.get("title").getAsString();
+                link = entry.get("link").getAsString();
+                preview = entry.get("preview").getAsString();
+                logger.info("Log to test");
+                var id = entry.get("id").getAsString();
+                playlist.addSong(id,title,link,date,preview);
+                System.out.println(entry);
+            }
         }catch (Exception e){
             e.printStackTrace();
         }

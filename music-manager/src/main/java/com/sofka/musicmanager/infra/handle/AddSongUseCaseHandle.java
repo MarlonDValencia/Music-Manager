@@ -18,7 +18,7 @@ public class AddSongUseCaseHandle extends UseCaseHandle {
         this.addSongUseCase = addSongUseCase;
     }
 
-    @ConsumeEvent(value = "com.sofka.songadded")
+    @ConsumeEvent(value = "com.sofka.addsong")
     void consumeBlocking(AddSongCommand addSongCommand){
         var events = addSongUseCase.apply(addSongCommand);
         savePlaylist(addSongCommand.getPlaylistId(),events);
