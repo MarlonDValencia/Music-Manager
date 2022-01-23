@@ -21,7 +21,7 @@ export default function rootReducer(state = initialState, action) {
             var data = action.payload[0].song;
             var names = Object.keys(data);
             var songs = [];
-
+            console.log(songs)
             for (let i = 0; i < names.length; i++) {
                 for (const song in data) {
                     if(song === names[i]){
@@ -29,8 +29,7 @@ export default function rootReducer(state = initialState, action) {
                     }
                 }
             }
-
-            return { ...state, playlist: _.shuffle(songs), loading: false, hasErrors: false };
+            return { ...state, playlist :songs , loading: false, hasErrors: false };
 
         case actions.LOADED_FAILURE:
             return { ...state, loading: false, hasErrors: true }
