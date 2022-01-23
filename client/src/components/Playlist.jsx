@@ -12,10 +12,11 @@ function Playlist() {
     );
     socket.onmessage = function (m) {
       const data = JSON.parse(m.data);
-      console.log(data.type);
+      console.log("Event type: "+data.type);
       dispatch(fetchPlaylist());
     };
   }, []);
+  
   return (
     <div>
       <h1>Wanna listen to some tunes?</h1>
